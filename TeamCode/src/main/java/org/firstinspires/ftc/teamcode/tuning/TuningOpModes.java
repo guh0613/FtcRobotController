@@ -150,7 +150,7 @@ public final class TuningOpModes {
         }
 
         manager.register(metaForClass(AngularRampLogger.class), new AngularRampLogger(dvf));
-        manager.register(metaForClass(ForwardPushTest.class), new ForwardPushTest(dvf));
+        manager.register(metaForClass(MyForwardPushTest.class), new MyForwardPushTest(dvf));
         manager.register(metaForClass(ForwardRampLogger.class), new ForwardRampLogger(dvf));
         manager.register(metaForClass(LateralPushTest.class), new LateralPushTest(dvf));
         manager.register(metaForClass(LateralRampLogger.class), new LateralRampLogger(dvf));
