@@ -19,6 +19,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
@@ -57,14 +58,20 @@ public final class TuningOpModes {
 
                 List<Encoder> leftEncs = new ArrayList<>(), rightEncs = new ArrayList<>();
                 List<Encoder> parEncs = new ArrayList<>(), perpEncs = new ArrayList<>();
+
                 if (md.localizer instanceof MecanumDrive.DriveLocalizer) {
                     MecanumDrive.DriveLocalizer dl = (MecanumDrive.DriveLocalizer) md.localizer;
+                    dl.rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+                    dl.rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
                     leftEncs.add(dl.leftFront);
                     leftEncs.add(dl.leftBack);
                     rightEncs.add(dl.rightFront);
                     rightEncs.add(dl.rightBack);
                 } else if (md.localizer instanceof ThreeDeadWheelLocalizer) {
                     ThreeDeadWheelLocalizer dl = (ThreeDeadWheelLocalizer) md.localizer;
+                    //dl.par0.setDirection(DcMotorSimple.Direction.REVERSE);
+                    //dl.par1.setDirection(DcMotorSimple.Direction.REVERSE);
+                    //dl.perp.setDirection(DcMotorSimple.Direction.REVERSE);
                     parEncs.add(dl.par0);
                     parEncs.add(dl.par1);
                     perpEncs.add(dl.perp);
@@ -76,6 +83,8 @@ public final class TuningOpModes {
                     throw new IllegalArgumentException("unknown localizer: " + md.localizer.getClass().getName());
                 }
 
+                md.rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+                md.rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
                 return new DriveView(
                     DriveType.MECANUM,
                         MecanumDrive.PARAMS.inPerTick,
@@ -114,6 +123,7 @@ public final class TuningOpModes {
                     rightEncs.addAll(dl.rightEncs);
                 } else if (td.localizer instanceof ThreeDeadWheelLocalizer) {
                     ThreeDeadWheelLocalizer dl = (ThreeDeadWheelLocalizer) td.localizer;
+
                     parEncs.add(dl.par0);
                     parEncs.add(dl.par1);
                     perpEncs.add(dl.perp);
@@ -150,7 +160,7 @@ public final class TuningOpModes {
         }
 
         manager.register(metaForClass(AngularRampLogger.class), new AngularRampLogger(dvf));
-        manager.register(metaForClass(MyForwardPushTest.class), new MyForwardPushTest(dvf));
+        manager.register(metaForClass(ForwardPushTest.class), new ForwardPushTest(dvf));
         manager.register(metaForClass(ForwardRampLogger.class), new ForwardRampLogger(dvf));
         manager.register(metaForClass(LateralPushTest.class), new LateralPushTest(dvf));
         manager.register(metaForClass(LateralRampLogger.class), new LateralRampLogger(dvf));
