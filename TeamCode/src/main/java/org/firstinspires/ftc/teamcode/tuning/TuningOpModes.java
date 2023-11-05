@@ -77,6 +77,7 @@ public final class TuningOpModes {
                     perpEncs.add(dl.perp);
                 } else if (md.localizer instanceof TwoDeadWheelLocalizer) {
                     TwoDeadWheelLocalizer dl = (TwoDeadWheelLocalizer) md.localizer;
+                    dl.par.setDirection(DcMotorSimple.Direction.REVERSE);
                     parEncs.add(dl.par);
                     perpEncs.add(dl.perp);
                 } else {
